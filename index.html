@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KKS कहानियाँ</title>
+  <style>
+    * { box-sizing: border-box; font-family: 'Roboto', system-ui, -apple-system, sans-serif; margin: 0; padding: 0; }
+    body { background: #0f0f0f; color: #f1f1f1; padding-bottom: 64px; }
+
+    /* YouTube टॉप हेडर */
+    header {
+      background: #0f0f0f;
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 30;
+    }
+    .yt-logo { display: flex; align-items: center; gap: 6px; cursor: pointer; }
+    .yt-red-box {
+      background: #ff0000;
+      color: #ffffff;
+      font-weight: 900;
+      font-size: 14px;
+      padding: 4px 9px;
+      border-radius: 7px;
+      letter-spacing: 0.5px;
+    }
+    .yt-logo-text { font-size: 19px; font-weight: 700; color: #ffffff; letter-spacing: -0.3px; }
+    .header-right { display: flex; align-items: center; gap: 10px; }
+    .sign-in-pill {
+      background: transparent;
+      border: 1px solid #303030;
+      color: #3ea6ff;
+      padding: 6px 12px;
+      border-radius: 18px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .user-avatar-top {
+      width: 30px; height: 30px; border-radius: 50%; background: #ff0000;
+      color: #fff; font-weight: 700; font-size: 14px; display: flex;
+      align-items: center; justify-content: center; cursor: pointer;
+    }
+
+    /* सर्च और कैटेगरी चिप्स */
+    .top-controls { background: #0f0f0f; padding: 0 14px 10px; position: sticky; top: 48px; z-index: 25; border-bottom: 1px solid #272727; }
+    .search-box {
+      width: 100%; background: #222222; border: 1px solid #303030; color: #fff;
+      padding: 8px 14px; border-radius: 20px; font-size: 14px; outline: none; margin-bottom: 10px;
+    }
+    .chips { display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; }
+    .chips::-webkit-scrollbar { display: none; }
+    .chip {
+      background: #272727; color: #f1f1f1; border: none; padding: 6px 12px;
+      border-radius: 8px; font-size: 13px; white-space: nowrap; cursor: pointer;
+    }
+    .chip.active { background: #f1f1f1; color: #0f0f0f; font-weight: 600; }
+
+    /* YouTube फ़ीड */
+    .feed { max-width: 680px; margin: 0 auto; }
+    .video-card { margin-bottom: 18px; background: #0f0f0f; }
+    .thumbnail {
+      width: 100%; min-height: 165px;
+      background: linear-gradient(135deg, #1f1f1f 0%, #121212 100%);
+      border-top: 1px solid #222; border-bottom: 1px solid #222;
+      padding: 18px 16px; display: flex; flex-direction: column;
+      justify-content: space-between; position: relative; cursor: pointer;
+    }
+    .thumb-cat { font-size: 11px; color: #ff4e45; font-weight: 700; text-transform: uppercase; margin-bottom: 6px; }
+    .thumb-excerpt { font-size: 15px; color: #d4d4d4; line-height: 1.55; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+    .duration-badge {
+      align-self: flex-end; background: rgba(0,0,0,0.85); color: #fff;
+      font-size: 11px; font-weight: 600; padding: 3px 6px; border-radius: 4px; margin-top: 10px;
+    }
+    .meta-row { display: flex; gap: 12px; padding: 12px 14px 4px; align-items: flex-start; }
+    .ch-avatar {
+      width: 38px; height: 38px; border-radius: 50%; background: #272727;
+      color: #fff; font-weight: 700; font-size: 16px; display: flex;
+      align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .meta-text { flex: 1; cursor: pointer; }
+    .v-title { font-size: 16px; font-weight: 600; color: #f1f1f1; line-height: 1.35; margin-bottom: 4px; }
+    .v-sub { font-size: 12px; color: #aaaaaa; }
+
+    /* Watch / Reader Screen (पूरी कहानी + लाइक + कमेंट) */
+    #watchModal {
+      display: none; position: fixed; inset: 0; background: #0f0f0f;
+      z-index: 50; overflow-y: auto; padding-bottom: 30px;
+    }
+    .watch-header {
+      position: sticky; top: 0; background: #0f0f0f; padding: 12px 14px;
+      display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #272727;
+    }
+    .back-btn { background: #272727; color: #fff; border: none; padding: 6px 14px; border-radius: 18px; font-size: 13px; cursor: pointer; }
+    .watch-content { max-width: 680px; margin: 0 auto; padding: 16px 14px; }
+    .w-title { font-size: 20px; font-weight: 700; margin-bottom: 6px; line-height: 1.35; }
+    .w-stats { font-size: 12px; color: #aaaaaa; margin-bottom: 14px; }
+
+    /* चैनल बार + Subscribe बटन */
+    .channel-bar {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 10px 0; border-top: 1px solid #272727; border-bottom: 1px solid #272727; margin-bottom: 14px;
+    }
+    .sub-btn {
+      background: #f1f1f1; color: #0f0f0f; border: none; padding: 8px 16px;
+      border-radius: 20px; font-size: 13px; font-weight: 700; cursor: pointer;
+    }
+    .sub-btn.subscribed { background: #272727; color: #f1f1f1; }
+
+    /* Action Pills (Like, Share, Report, Delete) */
+    .action-pills { display: flex; gap: 8px; overflow-x: auto; margin-bottom: 18px; scrollbar-width: none; }
+    .pill-btn {
+      background: #272727; color: #f1f1f1; border: none; padding: 8px 14px;
+      border-radius: 20px; font-size: 13px; font-weight: 500; white-space: nowrap; cursor: pointer;
+    }
+    .pill-btn.liked { background: #3ea6ff; color: #0f0f0f; font-weight: 700; }
+    .pill-btn.danger { background: #3f1515; color: #f87171; }
+
+    .story-full-text {
+      background: #181818; padding: 16px; border-radius: 12px; font-size: 16px;
+      line-height: 1.8; white-space: pre-wrap; color: #ececec; margin-bottom: 22px; border: 1px solid #272727;
+    }
+
+    /* कमेंट बॉक्स */
+    .comments-sec { background: #181818; padding: 14px; border-radius: 12px; border: 1px solid #272727; }
+    .comment-input-row { display: flex; gap: 8px; margin: 10px 0 14px; }
+    .comment-input-row input {
+      flex: 1; background: #0f0f0f; border: 1px solid #303030; color: #fff;
+      padding: 9px 12px; border-radius: 20px; font-size: 14px; outline: none;
+    }
+    .comment-input-row button {
+      background: #3ea6ff; color: #0f0f0f; border: none; padding: 0 16px;
+      border-radius: 20px; font-weight: 700; cursor: pointer;
+    }
+    .comment-item { padding: 8px 0; border-top: 1px solid #272727; font-size: 13px; }
+    .comment-author { font-weight: 700; color: #aaaaaa; font-size: 12px; margin-bottom: 2px; }
+
+    /* फॉर्म बॉक्स (Upload & Auth) */
+    .panel { max-width: 500px; margin: 16px auto; padding: 18px; background: #181818; border-radius: 14px; border: 1px solid #272727; }
+    .panel h2 { font-size: 18px; margin-bottom: 14px; }
+    .panel input, .panel select, .panel textarea {
+      width: 100%; background: #0f0f0f; border: 1px solid #303030; color: #fff;
+      padding: 11px; border-radius: 8px; margin-bottom: 10px; font-size: 14px; outline: none;
+    }
+    .panel textarea { min-height: 180px; resize: vertical; line-height: 1.6; }
+    .red-btn {
+      width: 100%; background: #ff0000; color: #fff; border: none; padding: 12px;
+      border-radius: 20px; font-size: 15px; font-weight: 700; cursor: pointer;
+    }
+    .link-btn { background: none; border: none; color: #3ea6ff; font-size: 13px; margin-top: 12px; cursor: pointer; width: 100%; }
+
+    /* नीचे YouTube नेविगेशन बार */
+    nav.bottom-nav {
+      position: fixed; bottom: 0; left: 0; right: 0; height: 56px;
+      background: #0f0f0f; border-top: 1px solid #272727;
+      display: flex; justify-content: space-around; align-items: center; z-index: 40;
+    }
+    .nav-btn {
+      background: none; border: none; color: #aaaaaa; display: flex;
+      flex-direction: column; align-items: center; font-size: 10px; gap: 3px; cursor: pointer; width: 20%;
+    }
+    .nav-btn.active { color: #ffffff; font-weight: 700; }
+    .plus-ring {
+      width: 34px; height: 34px; border-radius: 50%; border: 1.5px solid #fff;
+      display: flex; align-items: center; justify-content: center; font-size: 22px; color: #fff;
+    }
+    .hidden { display: none !important; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="yt-logo" id="logoHome">
+    <span class="yt-red-box">KKS</span>
+    <span class="yt-logo-text">कहानियाँ</span>
+  </div>
+  <div class="header-right" id="headerAuthArea">
+    <button class="sign-in-pill" id="topSignInBtn">👤 साइन इन</button>
+  </div>
+</header>
+
+<div class="top-controls" id="topControls">
+  <input type="text" class="search-box" id="searchInput" placeholder="🔍 KKS कहानियाँ में खोजें...">
+  <div class="chips" id="categoryChips">
+    <button class="chip active" data-cat="सभी">सभी</button>
+    <button class="chip" data-cat="प्रेम कहानी">प्रेम कहानी</button>
+    <button class="chip" data-cat="रहस्य-रोमांच">रहस्य-रोमांच</button>
+    <button class="chip" data-cat="प्रेरणादायक">प्रेरणादायक</button>
+    <button class="chip" data-cat="कविता">कविता</button>
+    <button class="chip" data-cat="लोक कथा">लोक कथा</button>
+  </div>
+</div>
+
+<!-- मुख्य फ़ीड -->
+<div class="feed" id="feedSection">
+  <div id="storiesFeed"><p style="text-align:center;color:#aaaaaa;padding:30px;">कहानियाँ लोड हो रही हैं...</p></div>
+</div>
+
+<!-- कहानी अपलोड सेक्शन -->
+<div id="uploadSection" class="hidden" style="padding:0 12px;">
+  <div class="panel">
+    <h2>➕ नई कहानी प्रकाशित करें</h2>
+    <select id="storyCategory">
+      <option value="प्रेम कहानी">प्रेम कहानी</option>
+      <option value="रहस्य-रोमांच">रहस्य-रोमांच</option>
+      <option value="प्रेरणादायक">प्रेरणादायक</option>
+      <option value="कविता">कविता</option>
+      <option value="लोक कथा">लोक कथा</option>
+    </select>
+    <input type="text" id="storyTitle" placeholder="कहानी का शीर्षक">
+    <textarea id="storyContent" placeholder="अपनी पूरी कहानी यहाँ लिखें..."></textarea>
+    <button class="red-btn" id="publishStoryBtn">प्रकाशित करें</button>
+  </div>
+</div>
+
+<!-- अकाउंट / चैनल पेज -->
+<div id="accountSection" class="hidden" style="padding:0 12px;">
+  <!-- लॉगिन / साइन-अप बॉक्स -->
+  <div class="panel" id="authBox">
+    <h2 id="authHeading">KKS कहानियाँ में साइन इन करें</h2>
+    <input type="text" id="channelNameInput" placeholder="आपका चैनल नाम (जैसे: मनीष कश्यप)" class="hidden">
+    <input type="email" id="emailInput" placeholder="ईमेल पता (Email)">
+    <input type="password" id="passInput" placeholder="पासवर्ड (कम से कम 6 अक्षर)">
+    <button class="red-btn" id="authSubmitBtn">साइन इन करें</button>
+    <button class="link-btn" id="toggleAuthModeBtn">नया अकाउंट और चैनल बनाएं (Sign Up)</button>
+  </div>
+
+  <!-- लॉगिन होने के बाद चैनल डैशबोर्ड -->
+  <div class="panel hidden" id="profileBox">
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;">
+      <div class="ch-avatar" id="profAvatar" style="width:52px;height:52px;font-size:22px;background:#ff0000;"></div>
+      <div>
+        <h2 id="profName" style="margin:0;"></h2>
+        <div id="profEmail" style="font-size:12px;color:#aaaaaa;"></div>
+      </div>
+    </div>
+    <button class="pill-btn danger" id="logoutBtn" style="width:100%;text-align:center;">लॉग आउट करें</button>
+  </div>
+</div>
+
+<!-- पूरी कहानी पढ़ने की स्क्रीन (YouTube Watch Page) -->
+<div id="watchModal">
+  <div class="watch-header">
+    <button class="back-btn" id="closeWatchBtn">← वापस</button>
+    <div class="yt-logo"><span class="yt-red-box">KKS</span><span class="yt-logo-text" style="font-size:16px;">कहानियाँ</span></div>
+  </div>
+  <div class="watch-content">
+    <div class="w-title" id="wTitle"></div>
+    <div class="w-stats" id="wStats"></div>
+
+    <div class="channel-bar">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <div class="ch-avatar" id="wChAvatar"></div>
+        <div>
+          <div id="wChName" style="font-weight:700;font-size:14px;"></div>
+          <div id="wSubCount" style="font-size:11px;color:#aaaaaa;"></div>
+        </div>
+      </div>
+      <button class="sub-btn" id="wSubBtn">Subscribe</button>
+    </div>
+
+    <div class="action-pills">
+      <button class="pill-btn" id="wLikeBtn">👍 <span id="wLikeCount">0</span></button>
+      <button class="pill-btn" id="wReportBtn">🚩 रिपोर्ट</button>
+      <button class="pill-btn danger hidden" id="wDeleteBtn">🗑️ कहानी हटाएं</button>
+    </div>
+
+    <div class="story-full-text" id="wBody"></div>
+
+    <div class="comments-sec">
+      <h4 style="font-size:14px;">💬 कमेंट्स (<span id="wCommCount">0</span>)</h4>
+      <div class="comment-input-row">
+        <input type="text" id="commentInput" placeholder="कहानी पर अपनी राय लिखें...">
+        <button id="sendCommentBtn">भेजें</button>
+      </div>
+      <div id="commentsList"></div>
+    </div>
+  </div>
+</div>
+
+<!-- YouTube जैसा बॉटम नेविगेशन बार -->
+<nav class="bottom-nav">
+  <button class="nav-btn active" id="navHome"><span style="font-size:18px;">🏠</span><span>होम</span></button>
+  <button class="nav-btn" id="navTrending"><span style="font-size:18px;">🔥</span><span>ट्रेंडिंग</span></button>
+  <button class="nav-btn" id="navUpload"><div class="plus-ring">+</div></button>
+  <button class="nav-btn" id="navSubs"><span style="font-size:18px;">📺</span><span>सब्सक्रिप्शन</span></button>
+  <button class="nav-btn" id="navYou"><span style="font-size:18px;">👤</span><span>आप</span></button>
+</nav>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+  import { getFirestore, collection, addDoc, deleteDoc, doc, setDoc, getDoc, updateDoc, increment, arrayUnion, arrayRemove, onSnapshot, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyCvS2Zvq8gV4oFbQAqLe9wNd48lz9VrJFk",
+    authDomain: "kahani-xyz.firebaseapp.com",
+    projectId: "kahani-xyz",
+    storageBucket: "kahani-xyz.firebasestorage.app",
+    messagingSenderId: "1002701823741",
+    appId: "1:1002701823741:web:89d17117ae83d85d4c2894",
+    measurementId: "G-036NFTTTCH"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+
+  let currentUser = null;
+  let allStories = [];
+  let mySubscriptions = [];
+  let activeTab = "home";
+  let selectedCat = "सभी";
+  let isSignUpMode = false;
+  let activeStoryId = null;
+
+  // Auth State बदलाव
+  onAuthStateChanged(auth, async (user) => {
+    currentUser = user;
+    const headerAuthArea = document.getElementById("headerAuthArea");
+    const authBox = document.getElementById("authBox");
+    const profileBox = document.getElementById("profileBox");
+
+    if (user) {
+      const name = user.displayName || "लेखक";
+      headerAuthArea.innerHTML = `<div class="user-avatar-top" id="topUserAvatar">${escapeHtml(name.charAt(0).toUpperCase())}</div>`;
+      document.getElementById("topUserAvatar").onclick = () => switchTab("you");
+
+      authBox.classList.add("hidden");
+      profileBox.classList.remove("hidden");
+      document.getElementById("profAvatar").textContent = name.charAt(0).toUpperCase();
+      document.getElementById("profName").textContent = name;
+      document.getElementById("profEmail").textContent = user.email;
+
+      // सब्सक्रिप्शन लोड करें
+      const userSnap = await getDoc(doc(db, "users", user.uid));
+      mySubscriptions = userSnap.exists() ? (userSnap.data().subscriptions || []) : [];
+    } else {
+      headerAuthArea.innerHTML = `<button class="sign-in-pill" id="topSignInBtn">👤 साइन इन</button>`;
+      document.getElementById("topSignInBtn").onclick = () => switchTab("you");
+      authBox.classList.remove("hidden");
+      profileBox.classList.add("hidden");
+      mySubscriptions = [];
+    }
+    renderFeed();
+  });
+
+  // Sign Up / Sign In टॉगल
+  document.getElementById("toggleAuthModeBtn").onclick = () => {
+    isSignUpMode = !isSignUpMode;
+    document.getElementById("authHeading").textContent = isSignUpMode ? "नया KKS चैनल और अकाउंट बनाएं" : "KKS कहानियाँ में साइन इन करें";
+    document.getElementById("channelNameInput").classList.toggle("hidden", !isSignUpMode);
+    document.getElementById("authSubmitBtn").textContent = isSignUpMode ? "चैनल बनाएं" : "साइन इन करें";
+    document.getElementById("toggleAuthModeBtn").textContent = isSignUpMode ? "पहले से अकाउंट है? साइन इन करें" : "नया अकाउंट और चैनल बनाएं (Sign Up)";
+  };
+
+  document.getElementById("authSubmitBtn").onclick = async () => {
+    const email = document.getElementById("emailInput").value.trim();
+    const pass = document.getElementById("passInput").value.trim();
+    const chName = document.getElementById("channelNameInput").value.trim();
+
+    if (!email || !pass) return alert("कृपया ईमेल और पासवर्ड भरें।");
+    try {
+      if (isSignUpMode) {
+        if (!chName) return alert("कृपया अपने चैनल का नाम लिखें।");
+        const cred = await createUserWithEmailAndPassword(auth, email, pass);
+        await updateProfile(cred.user, { displayName: chName });
+        await setDoc(doc(db, "users", cred.user.uid), { channelName: chName, subscriptions: [], subscribersCount: 0 });
+      } else {
+        await signInWithEmailAndPassword(auth, email, pass);
+      }
+      switchTab("home");
+    } catch (e) {
+      alert("एरर: " + e.message);
+    }
+  };
+
+  document.getElementById("logoutBtn").onclick = () => signOut(auth);
+
+  // नेविगेशन
+  function switchTab(tab) {
+    ["navHome", "navTrending", "navSubs", "navYou"].forEach(id => document.getElementById(id).classList.remove("active"));
+    document.getElementById("feedSection").classList.add("hidden");
+    document.getElementById("uploadSection").classList.add("hidden");
+    document.getElementById("accountSection").classList.add("hidden");
+    document.getElementById("topControls").classList.add("hidden");
+
+    if (tab === "upload") {
+      if (!currentUser) {
+        alert("कहानी अपलोड करने के लिए पहले साइन इन या नया चैनल बनाएं।");
+        return switchTab("you");
+      }
+      document.getElementById("uploadSection").classList.remove("hidden");
+    } else if (tab === "you") {
+      document.getElementById("navYou").classList.add("active");
+      document.getElementById("accountSection").classList.remove("hidden");
+    } else {
+      activeTab = tab;
+      if (tab === "home") document.getElementById("navHome").classList.add("active");
+      if (tab === "trending") document.getElementById("navTrending").classList.add("active");
+      if (tab === "subs") document.getElementById("navSubs").classList.add("active");
+      document.getElementById("feedSection").classList.remove("hidden");
+      document.getElementById("topControls").classList.remove("hidden");
+      renderFeed();
+    }
+  }
+
+  document.getElementById("logoHome").onclick = () => switchTab("home");
+  document.getElementById("navHome").onclick = () => switchTab("home");
+  document.getElementById("navTrending").onclick = () => switchTab("trending");
+  document.getElementById("navUpload").onclick = () => switchTab("upload");
+  document.getElementById("navSubs").onclick = () => switchTab("subs");
+  document.getElementById("navYou").onclick = () => switchTab("you");
+
+  // कैटेगरी और सर्च
+  document.querySelectorAll(".chip").forEach(btn => {
+    btn.onclick = () => {
+      document.querySelectorAll(".chip").forEach(c => c.classList.remove("active"));
+      btn.classList.add("active");
+      selectedCat = btn.dataset.cat;
+      renderFeed();
+    };
+  });
+  document.getElementById("searchInput").oninput = renderFeed;
+
+  // कहानी प्रकाशित करें
+  document.getElementById("publishStoryBtn").onclick = async () => {
+    if (!currentUser) return switchTab("you");
+    const category = document.getElementById("storyCategory").value;
+    const title = document.getElementById("storyTitle").value.trim();
+    const content = document.getElementById("storyContent").value.trim();
+
+    if (!title || !content) return alert("शीर्षक और कहानी दोनों लिखें।");
+    const btn = document.getElementById("publishStoryBtn");
+    btn.disabled = true;
+    btn.textContent = "अपलोड हो रहा है...";
+
+    try {
+      await addDoc(collection(db, "stories"), {
+        title,
+        content,
+        category,
+        author: currentUser.displayName || "लेखक",
+        authorUid: currentUser.uid,
+        views: 0,
+        likes: [],
+        createdAt: serverTimestamp()
+      });
+      document.getElementById("storyTitle").value = "";
+      document.getElementById("storyContent").value = "";
+      switchTab("home");
+    } catch (e) {
+      alert("अपलोड एरर: " + e.message);
+    }
+    btn.disabled = false;
+    btn.textContent = "प्रकाशित करें";
+  };
+
+  // लाइव कहानियाँ लोड करें
+  onSnapshot(query(collection(db, "stories"), orderBy("createdAt", "desc")), (snap) => {
+    allStories = [];
+    snap.forEach(d => allStories.push({ id: d.id, ...d.data() }));
+    renderFeed();
+    if (activeStoryId) refreshWatchModal();
+  });
+
+  function renderFeed() {
+    const feedEl = document.getElementById("storiesFeed");
+    const q = document.getElementById("searchInput").value.trim().toLowerCase();
+    let list = [...allStories];
+
+    if (activeTab === "trending") {
+      list.sort((a, b) => (b.views || 0) - (a.views || 0));
+    } else if (activeTab === "subs") {
+      if (!currentUser) {
+        feedEl.innerHTML = `<p style="text-align:center;color:#aaaaaa;padding:30px;">अपने सब्सक्राइब किए गए चैनल देखने के लिए साइन इन करें।</p>`;
+        return;
+      }
+      list = list.filter(s => mySubscriptions.includes(s.authorUid));
+    }
+
+    if (selectedCat !== "सभी") list = list.filter(s => s.category === selectedCat);
+    if (q) list = list.filter(s => (s.title || "").toLowerCase().includes(q) || (s.author || "").toLowerCase().includes(q));
+
+    if (list.length === 0) {
+      feedEl.innerHTML = `<p style="text-align:center;color:#aaaaaa;padding:30px;">यहाँ कोई कहानी नहीं मिली।</p>`;
+      return;
+    }
+
+    feedEl.innerHTML = "";
+    list.forEach(story => {
+      const readMin = Math.max(1, Math.ceil((story.content || "").split(/\s+/).length / 150));
+      const initial = (story.author || "K").charAt(0).toUpperCase();
+      const card = document.createElement("div");
+      card.className = "video-card";
+      card.innerHTML = `
+        <div class="thumbnail">
+          <div>
+            <div class="thumb-cat">${escapeHtml(story.category || "कहानी")}</div>
+            <div class="thumb-excerpt">${escapeHtml(story.content)}</div>
+          </div>
+          <span class="duration-badge">${readMin} मिनट का पठन</span>
+        </div>
+        <div class="meta-row">
+          <div class="ch-avatar">${escapeHtml(initial)}</div>
+          <div class="meta-text">
+            <div class="v-title">${escapeHtml(story.title)}</div>
+            <div class="v-sub">${escapeHtml(story.author)} • ${story.views || 0} बार पढ़ा गया • ${(story.likes || []).length} पसंद</div>
+          </div>
+        </div>
+      `;
+      card.onclick = () => openWatchModal(story.id);
+      feedEl.appendChild(card);
+    });
+  }
+
+  // Watch / Reader पेज खोलें
+  let unsubComments = null;
+  async function openWatchModal(id) {
+    activeStoryId = id;
+    document.getElementById("watchModal").style.display = "block";
+    await updateDoc(doc(db, "stories", id), { views: increment(1) }).catch(() => {});
+    refreshWatchModal();
+
+    if (unsubComments) unsubComments();
+    unsubComments = onSnapshot(query(collection(db, "stories", id, "comments"), orderBy("createdAt", "desc")), (snap) => {
+      document.getElementById("wCommCount").textContent = snap.size;
+      const cList = document.getElementById("commentsList");
+      cList.innerHTML = "";
+      snap.forEach(c => {
+        const d = c.data();
+        cList.innerHTML += `<div class="comment-item"><div class="comment-author">${escapeHtml(d.author)}</div><div>${escapeHtml(d.text)}</div></div>`;
+      });
+    });
+  }
+
+  function refreshWatchModal() {
+    const s = allStories.find(item => item.id === activeStoryId);
+    if (!s) return;
+    document.getElementById("wTitle").textContent = s.title;
+    document.getElementById("wStats").textContent = `${s.views || 0} बार पढ़ा गया • श्रेणी: ${s.category || "कहानी"}`;
+    document.getElementById("wChAvatar").textContent = (s.author || "K").charAt(0).toUpperCase();
+    document.getElementById("wChName").textContent = s.author;
+    document.getElementById("wSubCount").textContent = "KKS कहानियाँ क्रिएटर";
+    document.getElementById("wBody").textContent = s.content;
+
+    const likes = s.likes || [];
+    const isLiked = currentUser && likes.includes(currentUser.uid);
+    const likeBtn = document.getElementById("wLikeBtn");
+    likeBtn.classList.toggle("liked", !!isLiked);
+    document.getElementById("wLikeCount").textContent = likes.length;
+
+    const isSubbed = mySubscriptions.includes(s.authorUid);
+    const subBtn = document.getElementById("wSubBtn");
+    subBtn.textContent = isSubbed ? "Subscribed ✓" : "Subscribe";
+    subBtn.classList.toggle("subscribed", isSubbed);
+
+    const delBtn = document.getElementById("wDeleteBtn");
+    delBtn.classList.toggle("hidden", !(currentUser && currentUser.uid === s.authorUid));
+  }
+
+  document.getElementById("closeWatchBtn").onclick = () => {
+    activeStoryId = null;
+    document.getElementById("watchModal").style.display = "none";
+  };
+
+  // Like बटन
+  document.getElementById("wLikeBtn").onclick = async () => {
+    if (!currentUser) return alert("लाइक करने के लिए पहले साइन इन करें।");
+    const s = allStories.find(item => item.id === activeStoryId);
+    const isLiked = (s.likes || []).includes(currentUser.uid);
+    await updateDoc(doc(db, "stories", activeStoryId), {
+      likes: isLiked ? arrayRemove(currentUser.uid) : arrayUnion(currentUser.uid)
+    });
+  };
+
+  // Subscribe बटन
+  document.getElementById("wSubBtn").onclick = async () => {
+    if (!currentUser) return alert("Subscribe करने के लिए पहले साइन इन करें।");
+    const s = allStories.find(item => item.id === activeStoryId);
+    const isSubbed = mySubscriptions.includes(s.authorUid);
+    if (isSubbed) {
+      mySubscriptions = mySubscriptions.filter(uid => uid !== s.authorUid);
+      await updateDoc(doc(db, "users", currentUser.uid), { subscriptions: arrayRemove(s.authorUid) });
+    } else {
+      mySubscriptions.push(s.authorUid);
+      await setDoc(doc(db, "users", currentUser.uid), { subscriptions: arrayUnion(s.authorUid) }, { merge: true });
+    }
+    refreshWatchModal();
+  };
+
+  // कमेंट भेजें
+  document.getElementById("sendCommentBtn").onclick = async () => {
+    if (!currentUser) return alert("कमेंट करने के लिए पहले साइन इन करें।");
+    const txt = document.getElementById("commentInput").value.trim();
+    if (!txt) return;
+    await addDoc(collection(db, "stories", activeStoryId, "comments"), {
+      author: currentUser.displayName || "पाठक",
+      text: txt,
+      createdAt: serverTimestamp()
+    });
+    document.getElementById("commentInput").value = "";
+  };
+
+  // डिलीट और रिपोर्ट
+  document.getElementById("wDeleteBtn").onclick = async () => {
+    if (confirm("क्या आप वाकई अपनी यह कहानी हटाना चाहते हैं?")) {
+      await deleteDoc(doc(db, "stories", activeStoryId));
+      document.getElementById("watchModal").style.display = "none";
+    }
+  };
+
+  document.getElementById("wReportBtn").onclick = async () => {
+    const reason = prompt("रिपोर्ट करने का कारण लिखें:");
+    if (reason && reason.trim()) {
+      await addDoc(collection(db, "reports"), { storyId: activeStoryId, reason: reason.trim(), reportedAt: serverTimestamp() });
+      alert("आपकी रिपोर्ट भेज दी गई है।");
+    }
+  };
+
+  function escapeHtml(str) {
+    return String(str || "").replace(/[&<>"']/g, m => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[m]));
+  }
+</script>
+</body>
+</html>
