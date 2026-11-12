@@ -1,0 +1,17 @@
+{
+  "name": "KKS कहानियाँ",
+  "short_name": "KKS कहानियाँ",
+  "start_url": "/index.html/",
+  "scope": "/index.html/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#dc2626",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='110' fill='%23dc2626'/%3E%3Ctext x='256' y='315' font-family='sans-serif' font-size='185' font-weight='bold' fill='%23ffffff' text-anchor='middle'%3EKKS%3C/text%3E%3C/svg%3E",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
