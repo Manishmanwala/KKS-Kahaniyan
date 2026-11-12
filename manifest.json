@@ -1,8 +1,8 @@
 {
   "name": "KKS कहानियाँ",
   "short_name": "KKS कहानियाँ",
-  "start_url": "/index.html/",
-  "scope": "/index.html/",
+  "start_url": "/KKS-Kahaniyan/",
+  "scope": "/KKS-Kahaniyan/",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#dc2626",
