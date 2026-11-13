@@ -1,19 +1,51 @@
 <!DOCTYPE html>
 <html lang="hi">
-<meta name="theme-color" content="#dc2626">
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%23dc2626'/%3E%3Ctext x='50' y='63' font-family='sans-serif' font-size='36' font-weight='bold' fill='%23ffffff' text-anchor='middle'%3EKKS%3C/text%3E%3C/svg%3E">
-<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%23dc2626'/%3E%3Ctext x='50' y='63' font-family='sans-serif' font-size='36' font-weight='bold' fill='%23ffffff' text-anchor='middle'%3EKKS%3C/text%3E%3C/svg%3E">
-<link rel="manifest" href="manifest.json">
-<script>
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('sw.js');
-  }
-</script>
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>KKS कहानियाँ</title>
+  <meta name="theme-color" content="#dc2626">
+
+  <!-- Google Search SEO मेटा टैग्स -->
+  <title>KKS कहानियाँ — हिंदी कहानियाँ, कविताएँ और लोक कथाएँ</title>
+  <meta name="description" content="KKS कहानियाँ (काव्य-कथा संगम) पर पढ़ें दिल को छू लेने वाली हिंदी प्रेम कहानियाँ, रहस्य-रोमांच, प्रेरणादायक कथाएँ, कविताएँ और लोक कथाएँ। अपनी खुद की कहानी भी प्रकाशित करें।">
+  <meta name="keywords" content="KKS कहानियाँ, हिंदी कहानियाँ, Hindi Stories, प्रेम कहानी, रहस्य रोमांच कहानी, प्रेरणादायक कहानियाँ, हिंदी कविता, लोक कथा, काव्य कथा संगम, manishmanwala">
+  <meta name="author" content="मनीष कश्यप — KKS कहानियाँ">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://manishmanwala.github.io/KKS-Kahaniyan/">
+
+  <!-- WhatsApp और सोशल मीडिया शेयर प्रिव्यू (Open Graph) -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="KKS कहानियाँ — हिंदी कहानियाँ और कविताएँ">
+  <meta property="og:description" content="पढ़ें और लिखें बेहतरीन हिंदी कहानियाँ, कविताएँ और लोक कथाएँ।">
+  <meta property="og:url" content="https://manishmanwala.github.io/KKS-Kahaniyan/">
+  <meta property="og:site_name" content="KKS कहानियाँ">
+
+  <!-- Google Structured Data (WebSite + SearchAction Schema) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "KKS कहानियाँ",
+    "alternateName": "काव्य-कथा संगम",
+    "url": "https://manishmanwala.github.io/KKS-Kahaniyan/",
+    "inLanguage": "hi",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://manishmanwala.github.io/KKS-Kahaniyan/?q={search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
+  }
+  </script>
+
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%23dc2626'/%3E%3Ctext x='50' y='63' font-family='sans-serif' font-size='36' font-weight='bold' fill='%23ffffff' text-anchor='middle'%3EKKS%3C/text%3E%3C/svg%3E">
+  <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%23dc2626'/%3E%3Ctext x='50' y='63' font-family='sans-serif' font-size='36' font-weight='bold' fill='%23ffffff' text-anchor='middle'%3EKKS%3C/text%3E%3C/svg%3E">
+  <link rel="manifest" href="manifest.json">
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js');
+    }
+  </script>
+
   <style>
     * { box-sizing: border-box; font-family: 'Roboto', system-ui, -apple-system, sans-serif; margin: 0; padding: 0; }
     body { background: #0f0f0f; color: #f1f1f1; padding-bottom: 64px; }
@@ -59,9 +91,17 @@
 
     /* सर्च और कैटेगरी चिप्स */
     .top-controls { background: #0f0f0f; padding: 0 14px 10px; position: sticky; top: 48px; z-index: 25; border-bottom: 1px solid #272727; }
+    .search-wrap { position: relative; margin-bottom: 10px; }
     .search-box {
       width: 100%; background: #222222; border: 1px solid #303030; color: #fff;
-      padding: 8px 14px; border-radius: 20px; font-size: 14px; outline: none; margin-bottom: 10px;
+      padding: 9px 36px 9px 14px; border-radius: 20px; font-size: 14px; outline: none;
+    }
+    .search-box:focus { border-color: #3ea6ff; }
+    .clear-search-btn {
+      position: absolute; right: 10px; top: 50%; transform: translateY(-50%);
+      background: #383838; color: #fff; border: none; width: 22px; height: 22px;
+      border-radius: 50%; font-size: 12px; cursor: pointer; display: none;
+      align-items: center; justify-content: center;
     }
     .chips { display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; }
     .chips::-webkit-scrollbar { display: none; }
@@ -73,6 +113,7 @@
 
     /* YouTube फ़ीड */
     .feed { max-width: 680px; margin: 0 auto; }
+    .search-status { font-size: 12px; color: #aaaaaa; padding: 10px 14px 2px; }
     .video-card { margin-bottom: 18px; background: #0f0f0f; }
     .thumbnail {
       width: 100%; min-height: 165px;
@@ -97,7 +138,7 @@
     .v-title { font-size: 16px; font-weight: 600; color: #f1f1f1; line-height: 1.35; margin-bottom: 4px; }
     .v-sub { font-size: 12px; color: #aaaaaa; }
 
-    /* Watch / Reader Screen (पूरी कहानी + लाइक + कमेंट) */
+    /* Watch / Reader Screen */
     #watchModal {
       display: none; position: fixed; inset: 0; background: #0f0f0f;
       z-index: 50; overflow-y: auto; padding-bottom: 30px;
@@ -111,7 +152,6 @@
     .w-title { font-size: 20px; font-weight: 700; margin-bottom: 6px; line-height: 1.35; }
     .w-stats { font-size: 12px; color: #aaaaaa; margin-bottom: 14px; }
 
-    /* चैनल बार + Subscribe बटन */
     .channel-bar {
       display: flex; align-items: center; justify-content: space-between;
       padding: 10px 0; border-top: 1px solid #272727; border-bottom: 1px solid #272727; margin-bottom: 14px;
@@ -122,7 +162,6 @@
     }
     .sub-btn.subscribed { background: #272727; color: #f1f1f1; }
 
-    /* Action Pills (Like, Share, Report, Delete) */
     .action-pills { display: flex; gap: 8px; overflow-x: auto; margin-bottom: 18px; scrollbar-width: none; }
     .pill-btn {
       background: #272727; color: #f1f1f1; border: none; padding: 8px 14px;
@@ -150,7 +189,7 @@
     .comment-item { padding: 8px 0; border-top: 1px solid #272727; font-size: 13px; }
     .comment-author { font-weight: 700; color: #aaaaaa; font-size: 12px; margin-bottom: 2px; }
 
-    /* फॉर्म बॉक्स (Upload & Auth) */
+    /* फॉर्म बॉक्स */
     .panel { max-width: 500px; margin: 16px auto; padding: 18px; background: #181818; border-radius: 14px; border: 1px solid #272727; }
     .panel h2 { font-size: 18px; margin-bottom: 14px; }
     .panel input, .panel select, .panel textarea {
@@ -164,7 +203,7 @@
     }
     .link-btn { background: none; border: none; color: #3ea6ff; font-size: 13px; margin-top: 12px; cursor: pointer; width: 100%; }
 
-    /* नीचे YouTube नेविगेशन बार */
+    /* बॉटम नेविगेशन बार */
     nav.bottom-nav {
       position: fixed; bottom: 0; left: 0; right: 0; height: 56px;
       background: #0f0f0f; border-top: 1px solid #272727;
@@ -187,7 +226,7 @@
 <header>
   <div class="yt-logo" id="logoHome">
     <span class="yt-red-box">KKS</span>
-    <span class="yt-logo-text">कहानियाँ</span>
+    <h1 class="yt-logo-text" style="margin:0;">कहानियाँ</h1>
   </div>
   <div class="header-right" id="headerAuthArea">
     <button class="sign-in-pill" id="topSignInBtn">👤 साइन इन</button>
@@ -195,7 +234,10 @@
 </header>
 
 <div class="top-controls" id="topControls">
-  <input type="text" class="search-box" id="searchInput" placeholder="🔍 KKS कहानियाँ में खोजें...">
+  <div class="search-wrap">
+    <input type="text" class="search-box" id="searchInput" placeholder="🔍 कहानी, लेखक या शब्द खोजें...">
+    <button class="clear-search-btn" id="clearSearchBtn" aria-label="खोज साफ़ करें">✕</button>
+  </div>
   <div class="chips" id="categoryChips">
     <button class="chip active" data-cat="सभी">सभी</button>
     <button class="chip" data-cat="प्रेम कहानी">प्रेम कहानी</button>
@@ -207,9 +249,10 @@
 </div>
 
 <!-- मुख्य फ़ीड -->
-<div class="feed" id="feedSection">
+<main class="feed" id="feedSection">
+  <div class="search-status hidden" id="searchStatus"></div>
   <div id="storiesFeed"><p style="text-align:center;color:#aaaaaa;padding:30px;">कहानियाँ लोड हो रही हैं...</p></div>
-</div>
+</main>
 
 <!-- कहानी अपलोड सेक्शन -->
 <div id="uploadSection" class="hidden" style="padding:0 12px;">
@@ -230,7 +273,6 @@
 
 <!-- अकाउंट / चैनल पेज -->
 <div id="accountSection" class="hidden" style="padding:0 12px;">
-  <!-- लॉगिन / साइन-अप बॉक्स -->
   <div class="panel" id="authBox">
     <h2 id="authHeading">KKS कहानियाँ में साइन इन करें</h2>
     <input type="text" id="channelNameInput" placeholder="आपका चैनल नाम (जैसे: मनीष कश्यप)" class="hidden">
@@ -240,7 +282,6 @@
     <button class="link-btn" id="toggleAuthModeBtn">नया अकाउंट और चैनल बनाएं (Sign Up)</button>
   </div>
 
-  <!-- लॉगिन होने के बाद चैनल डैशबोर्ड -->
   <div class="panel hidden" id="profileBox">
     <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;">
       <div class="ch-avatar" id="profAvatar" style="width:52px;height:52px;font-size:22px;background:#ff0000;"></div>
@@ -253,7 +294,7 @@
   </div>
 </div>
 
-<!-- पूरी कहानी पढ़ने की स्क्रीन (YouTube Watch Page) -->
+<!-- पूरी कहानी पढ़ने की स्क्रीन -->
 <div id="watchModal">
   <div class="watch-header">
     <button class="back-btn" id="closeWatchBtn">← वापस</button>
@@ -276,11 +317,12 @@
 
     <div class="action-pills">
       <button class="pill-btn" id="wLikeBtn">👍 <span id="wLikeCount">0</span></button>
+      <button class="pill-btn" id="wShareBtn">🔗 शेयर करें</button>
       <button class="pill-btn" id="wReportBtn">🚩 रिपोर्ट</button>
       <button class="pill-btn danger hidden" id="wDeleteBtn">🗑️ कहानी हटाएं</button>
     </div>
 
-    <div class="story-full-text" id="wBody"></div>
+    <article class="story-full-text" id="wBody"></article>
 
     <div class="comments-sec">
       <h4 style="font-size:14px;">💬 कमेंट्स (<span id="wCommCount">0</span>)</h4>
@@ -293,7 +335,7 @@
   </div>
 </div>
 
-<!-- YouTube जैसा बॉटम नेविगेशन बार -->
+<!-- बॉटम नेविगेशन बार -->
 <nav class="bottom-nav">
   <button class="nav-btn active" id="navHome"><span style="font-size:18px;">🏠</span><span>होम</span></button>
   <button class="nav-btn" id="navTrending"><span style="font-size:18px;">🔥</span><span>ट्रेंडिंग</span></button>
@@ -329,7 +371,14 @@
   let isSignUpMode = false;
   let activeStoryId = null;
 
-  // Auth State बदलाव
+  const urlParams = new URLSearchParams(window.location.search);
+  const initialQuery = urlParams.get("q");
+  const initialStoryId = urlParams.get("story");
+  if (initialQuery) {
+    document.getElementById("searchInput").value = initialQuery;
+    document.getElementById("clearSearchBtn").style.display = "flex";
+  }
+
   onAuthStateChanged(auth, async (user) => {
     currentUser = user;
     const headerAuthArea = document.getElementById("headerAuthArea");
@@ -347,7 +396,6 @@
       document.getElementById("profName").textContent = name;
       document.getElementById("profEmail").textContent = user.email;
 
-      // सब्सक्रिप्शन लोड करें
       const userSnap = await getDoc(doc(db, "users", user.uid));
       mySubscriptions = userSnap.exists() ? (userSnap.data().subscriptions || []) : [];
     } else {
@@ -360,7 +408,6 @@
     renderFeed();
   });
 
-  // Sign Up / Sign In टॉगल
   document.getElementById("toggleAuthModeBtn").onclick = () => {
     isSignUpMode = !isSignUpMode;
     document.getElementById("authHeading").textContent = isSignUpMode ? "नया KKS चैनल और अकाउंट बनाएं" : "KKS कहानियाँ में साइन इन करें";
@@ -392,7 +439,6 @@
 
   document.getElementById("logoutBtn").onclick = () => signOut(auth);
 
-  // नेविगेशन
   function switchTab(tab) {
     ["navHome", "navTrending", "navSubs", "navYou"].forEach(id => document.getElementById(id).classList.remove("active"));
     document.getElementById("feedSection").classList.add("hidden");
@@ -427,7 +473,6 @@
   document.getElementById("navSubs").onclick = () => switchTab("subs");
   document.getElementById("navYou").onclick = () => switchTab("you");
 
-  // कैटेगरी और सर्च
   document.querySelectorAll(".chip").forEach(btn => {
     btn.onclick = () => {
       document.querySelectorAll(".chip").forEach(c => c.classList.remove("active"));
@@ -436,9 +481,19 @@
       renderFeed();
     };
   });
-  document.getElementById("searchInput").oninput = renderFeed;
 
-  // कहानी प्रकाशित करें
+  const searchInputEl = document.getElementById("searchInput");
+  const clearSearchBtn = document.getElementById("clearSearchBtn");
+  searchInputEl.oninput = () => {
+    clearSearchBtn.style.display = searchInputEl.value.trim() ? "flex" : "none";
+    renderFeed();
+  };
+  clearSearchBtn.onclick = () => {
+    searchInputEl.value = "";
+    clearSearchBtn.style.display = "none";
+    renderFeed();
+  };
+
   document.getElementById("publishStoryBtn").onclick = async () => {
     if (!currentUser) return switchTab("you");
     const category = document.getElementById("storyCategory").value;
@@ -471,23 +526,29 @@
     btn.textContent = "प्रकाशित करें";
   };
 
-  // लाइव कहानियाँ लोड करें
+  let openedInitialStory = false;
   onSnapshot(query(collection(db, "stories"), orderBy("createdAt", "desc")), (snap) => {
     allStories = [];
     snap.forEach(d => allStories.push({ id: d.id, ...d.data() }));
     renderFeed();
+    if (initialStoryId && !openedInitialStory && allStories.some(s => s.id === initialStoryId)) {
+      openedInitialStory = true;
+      openWatchModal(initialStoryId);
+    }
     if (activeStoryId) refreshWatchModal();
   });
 
   function renderFeed() {
     const feedEl = document.getElementById("storiesFeed");
-    const q = document.getElementById("searchInput").value.trim().toLowerCase();
+    const statusEl = document.getElementById("searchStatus");
+    const q = searchInputEl.value.trim().toLowerCase();
     let list = [...allStories];
 
     if (activeTab === "trending") {
       list.sort((a, b) => (b.views || 0) - (a.views || 0));
     } else if (activeTab === "subs") {
       if (!currentUser) {
+        statusEl.classList.add("hidden");
         feedEl.innerHTML = `<p style="text-align:center;color:#aaaaaa;padding:30px;">अपने सब्सक्राइब किए गए चैनल देखने के लिए साइन इन करें।</p>`;
         return;
       }
@@ -495,7 +556,19 @@
     }
 
     if (selectedCat !== "सभी") list = list.filter(s => s.category === selectedCat);
-    if (q) list = list.filter(s => (s.title || "").toLowerCase().includes(q) || (s.author || "").toLowerCase().includes(q));
+
+    if (q) {
+      list = list.filter(s =>
+        (s.title || "").toLowerCase().includes(q) ||
+        (s.author || "").toLowerCase().includes(q) ||
+        (s.category || "").toLowerCase().includes(q) ||
+        (s.content || "").toLowerCase().includes(q)
+      );
+      statusEl.textContent = `"${searchInputEl.value.trim()}" के लिए ${list.length} परिणाम मिले`;
+      statusEl.classList.remove("hidden");
+    } else {
+      statusEl.classList.add("hidden");
+    }
 
     if (list.length === 0) {
       feedEl.innerHTML = `<p style="text-align:center;color:#aaaaaa;padding:30px;">यहाँ कोई कहानी नहीं मिली।</p>`;
@@ -506,7 +579,7 @@
     list.forEach(story => {
       const readMin = Math.max(1, Math.ceil((story.content || "").split(/\s+/).length / 150));
       const initial = (story.author || "K").charAt(0).toUpperCase();
-      const card = document.createElement("div");
+      const card = document.createElement("article");
       card.className = "video-card";
       card.innerHTML = `
         <div class="thumbnail">
@@ -519,7 +592,7 @@
         <div class="meta-row">
           <div class="ch-avatar">${escapeHtml(initial)}</div>
           <div class="meta-text">
-            <div class="v-title">${escapeHtml(story.title)}</div>
+            <h2 class="v-title">${escapeHtml(story.title)}</h2>
             <div class="v-sub">${escapeHtml(story.author)} • ${story.views || 0} बार पढ़ा गया • ${(story.likes || []).length} पसंद</div>
           </div>
         </div>
@@ -529,7 +602,6 @@
     });
   }
 
-  // Watch / Reader पेज खोलें
   let unsubComments = null;
   async function openWatchModal(id) {
     activeStoryId = id;
@@ -552,6 +624,7 @@
   function refreshWatchModal() {
     const s = allStories.find(item => item.id === activeStoryId);
     if (!s) return;
+    document.title = `${s.title} — KKS कहानियाँ`;
     document.getElementById("wTitle").textContent = s.title;
     document.getElementById("wStats").textContent = `${s.views || 0} बार पढ़ा गया • श्रेणी: ${s.category || "कहानी"}`;
     document.getElementById("wChAvatar").textContent = (s.author || "K").charAt(0).toUpperCase();
@@ -576,10 +649,22 @@
 
   document.getElementById("closeWatchBtn").onclick = () => {
     activeStoryId = null;
+    document.title = "KKS कहानियाँ — हिंदी कहानियाँ, कविताएँ और लोक कथाएँ";
     document.getElementById("watchModal").style.display = "none";
   };
 
-  // Like बटन
+  document.getElementById("wShareBtn").onclick = async () => {
+    const s = allStories.find(item => item.id === activeStoryId);
+    if (!s) return;
+    const shareUrl = `https://manishmanwala.github.io/KKS-Kahaniyan/?story=${s.id}`;
+    if (navigator.share) {
+      navigator.share({ title: s.title, text: `पढ़ें "${s.title}" — KKS कहानियाँ पर:`, url: shareUrl }).catch(() => {});
+    } else {
+      await navigator.clipboard.writeText(shareUrl);
+      alert("कहानी का सीधा लिंक कॉपी हो गया है!");
+    }
+  };
+
   document.getElementById("wLikeBtn").onclick = async () => {
     if (!currentUser) return alert("लाइक करने के लिए पहले साइन इन करें।");
     const s = allStories.find(item => item.id === activeStoryId);
@@ -589,7 +674,6 @@
     });
   };
 
-  // Subscribe बटन
   document.getElementById("wSubBtn").onclick = async () => {
     if (!currentUser) return alert("Subscribe करने के लिए पहले साइन इन करें।");
     const s = allStories.find(item => item.id === activeStoryId);
@@ -604,7 +688,6 @@
     refreshWatchModal();
   };
 
-  // कमेंट भेजें
   document.getElementById("sendCommentBtn").onclick = async () => {
     if (!currentUser) return alert("कमेंट करने के लिए पहले साइन इन करें।");
     const txt = document.getElementById("commentInput").value.trim();
@@ -617,7 +700,6 @@
     document.getElementById("commentInput").value = "";
   };
 
-  // डिलीट और रिपोर्ट
   document.getElementById("wDeleteBtn").onclick = async () => {
     if (confirm("क्या आप वाकई अपनी यह कहानी हटाना चाहते हैं?")) {
       await deleteDoc(doc(db, "stories", activeStoryId));
