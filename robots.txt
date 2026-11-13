@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://manishmanwala.github.io/KKS-Kahaniyan/sitemap.xml
