@@ -36,6 +36,7 @@ export function createStartScreenController(options = {}) {
   let currentPercent = 0;
   let isReady = false;
   let hasExited = false;
+  let autoEnterTimer = null;
 
   const existing = document.getElementById("kks-cinematic-start");
   if (existing) existing.remove();
@@ -64,9 +65,17 @@ export function createStartScreenController(options = {}) {
   const counterEl = overlay.querySelector("#kks-real-counter");
   const skipBtn = overlay.querySelector("#kks-skip-intro");
 
+  function clearAutoTimer() {
+    if (autoEnterTimer) {
+      clearTimeout(autoEnterTimer);
+      autoEnterTimer = null;
+    }
+  }
+
   function exitNow() {
     if (hasExited) return;
     hasExited = true;
+    clearAutoTimer();
     overlay.classList.add("is-exiting");
     setTimeout(() => {
       overlay.remove();
@@ -93,7 +102,12 @@ export function createStartScreenController(options = {}) {
     if (counterEl) {
       counterEl.textContent = `चरण ${totalSteps} / ${totalSteps} — 100% (${finalLabel})`;
     }
-    await new Promise((r) => setTimeout(r, 3500));
+    await new Promise((resolve) => {
+      autoEnterTimer = setTimeout(() => {
+        autoEnterTimer = null;
+        resolve();
+      }, 10000);
+    });
     exitNow();
   }
 
@@ -198,9 +212,39 @@ export async function init(context = {}) {
     window.db = context?.db || null;
   }
 
-  await runVerifiedStartSequence({
-    checkInternet: async () => (typeof navigator !== "undefined" ? navigator.onLine : false),
-    checkFirebase: async () => Boolean(context?.db),
-    checkRamData: async () => true
-  });
+  const openAfterStart = async () => {
+    const root =
+      typeof document !== "undefined"
+        ? document.getElementById("app-root") || document.body
+        : null;
+    if (!root) return;
+
+    try {
+      const homeMod = await import("../04-home-page/logic.js");
+      if (typeof homeMod.renderHomePageLayout === "function") {
+        homeMod.renderHomePageLayout(root);
+      }
+    } catch (_) {}
+
+    try {
+      const pageOneMod = await import("../page-one/logic.js");
+      const feedTarget =
+        (typeof document !== "undefined" && document.getElementById("kks-home-feed")) ||
+        root;
+      if (typeof pageOneMod.renderPageOne === "function" && feedTarget) {
+        pageOneMod.renderPageOne(feedTarget);
+      }
+    } catch (_) {}
+  };
+
+  await runVerifiedStartSequence(
+    {
+      checkInternet: async () => (typeof navigator !== "undefined" ? navigator.onLine : false),
+      checkFirebase: async () => Boolean(context?.db),
+      checkRamData: async () => true
+    },
+    {
+      onEnter: openAfterStart
+    }
+  );
 }
