@@ -7,7 +7,7 @@ const MODULES = [
   "./03-start-screen",
   "./04-home-page",
   "./05-error-alert",
-  "./06page-one",
+  "./06-page-one",
 ];
 
 const CANDIDATE_FILES = [
