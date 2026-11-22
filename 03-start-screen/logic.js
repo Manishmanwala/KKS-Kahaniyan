@@ -80,7 +80,7 @@ export function createStartScreenController(options = {}) {
     setTimeout(() => {
       overlay.remove();
       if (typeof onEnter === "function") onEnter();
-    }, 650);
+    }, 10000);
   }
 
   function stepDone(label = "चरण पूरा") {
@@ -106,7 +106,7 @@ export function createStartScreenController(options = {}) {
       autoEnterTimer = setTimeout(() => {
         autoEnterTimer = null;
         resolve();
-      }, 10000);
+      }, 0000);
     });
     exitNow();
   }
