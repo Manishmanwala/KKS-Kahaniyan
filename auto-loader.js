@@ -2,7 +2,9 @@
 import { app, auth, db, appConfig } from "./01-core-config/firebase-init.js";
 
 const MODULES = [
-  "./01-core-config"
+  "./01-core-config",
+  "./02-icons",
+  "./03-start-screen"
 ];
 
 const CANDIDATE_FILES = [
