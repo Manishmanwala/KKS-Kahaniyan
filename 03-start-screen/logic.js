@@ -227,7 +227,7 @@ export async function init(context = {}) {
     } catch (_) {}
 
     try {
-      const pageOneMod = await import("../page-one/logic.js");
+      const pageOneMod = await import("../06-page-one/logic.js");
       const feedTarget =
         (typeof document !== "undefined" && document.getElementById("kks-home-feed")) ||
         root;
