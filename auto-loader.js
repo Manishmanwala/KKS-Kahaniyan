@@ -4,7 +4,7 @@ import { app, auth, db, appConfig } from "./01-core-config/firebase-init.js";
 const MODULES = [
   "./01-core-config",
   "./02-icons",
-  "./03-start-screen"
+  "./03-start-screen",
   "./04-home-page",
   "./05-error-alert",
   "./06page-one",
