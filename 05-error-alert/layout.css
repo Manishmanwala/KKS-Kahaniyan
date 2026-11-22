@@ -1,0 +1,86 @@
+/* 05-error-alert/layout.css - अलर्ट / Live Health पैनल का लेआउट और रंग-रोगन */
+
+.kks-alert-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 10050;
+  background: rgba(0, 0, 0, 0.72);
+  display: none;
+  align-items: flex-end;
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+.kks-alert-backdrop.is-open {
+  display: flex;
+}
+
+.kks-alert-sheet {
+  width: 100%;
+  max-height: 80vh;
+  overflow-y: auto;
+  background: #0b1220;
+  color: #f8fafc;
+  border-top-left-radius: 18px;
+  border-top-right-radius: 18px;
+  padding: 18px;
+  border-top: 2px solid #334155;
+}
+
+.kks-alert-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.kks-alert-title {
+  font-size: 17px;
+  font-weight: 800;
+}
+
+.kks-alert-summary {
+  font-size: 12px;
+  margin-top: 3px;
+  color: #cbd5e1;
+}
+
+.kks-alert-close {
+  background: #1e293b;
+  color: #ffffff;
+  border: 1px solid #475569;
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.kks-alert-group {
+  margin-bottom: 14px;
+  padding-left: 12px;
+  border-left: 4px solid #64748b;
+}
+
+.kks-alert-ok {
+  border-left-color: #22c55e;
+}
+
+.kks-alert-fail {
+  border-left-color: #ef4444;
+}
+
+.kks-alert-pending {
+  border-left-color: #eab308;
+}
+
+.kks-alert-heading {
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 5px;
+}
+
+.kks-alert-line {
+  font-size: 13px;
+  line-height: 1.5;
+  color: #e2e8f0;
+}
