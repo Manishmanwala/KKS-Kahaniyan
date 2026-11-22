@@ -93,7 +93,7 @@ export function createStartScreenController(options = {}) {
     if (counterEl) {
       counterEl.textContent = `चरण ${totalSteps} / ${totalSteps} — 100% (${finalLabel})`;
     }
-    await new Promise((r) => setTimeout(r, 350));
+    await new Promise((r) => setTimeout(r, 3500));
     exitNow();
   }
 
