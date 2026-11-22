@@ -46,7 +46,8 @@
 </head>
 <body>
 
-  <div id="app-root"></div>
+  <!-- केंद्रीय खाली कंटेनर: मॉड्यूल्स यहीं लोड होंगे -->
+  <div id="app-root" data-key-source="external-or-config"></div>
 
   <script>
     if ("serviceWorker" in navigator) {
@@ -56,6 +57,7 @@
     }
   </script>
 
+  <!-- ऑटो-लोडर कनेक्शन: यहीं से आगे मॉड्यूल और चाबी/कॉन्फ़िग लोड होने का क्रम शुरू होगा -->
   <script type="module" src="./auto-loader.js"></script>
 </body>
 </html>
