@@ -80,7 +80,7 @@ export function createStartScreenController(options = {}) {
     setTimeout(() => {
       overlay.remove();
       if (typeof onEnter === "function") onEnter();
-    }, 10000);
+    }, 650);
   }
 
   function stepDone(label = "चरण पूरा") {
@@ -106,7 +106,7 @@ export function createStartScreenController(options = {}) {
       autoEnterTimer = setTimeout(() => {
         autoEnterTimer = null;
         resolve();
-      }, 0000);
+      }, 10000);
     });
     exitNow();
   }
@@ -239,8 +239,9 @@ export async function init(context = {}) {
 
   await runVerifiedStartSequence(
     {
-      checkInternet: async () => (typeof navigator !== "undefined" ? navigator.onLine : false),
-      checkFirebase: async () => Boolean(context?.db),
+      checkInternet: async () =>
+        typeof navigator !== "undefined" ? navigator.onLine : false,
+      checkFirebase: async () => true,
       checkRamData: async () => true
     },
     {
