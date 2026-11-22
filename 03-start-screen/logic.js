@@ -182,3 +182,25 @@ export async function runVerifiedStartSequence(checks = {}, startOptions = {}) {
 
   return status;
 }
+
+export async function init(context = {}) {
+  if (typeof document !== "undefined") {
+    const style = document.createElement("link");
+    style.rel = "stylesheet";
+    style.href = "./03-start-screen/layout.css";
+    if (!document.head.querySelector('link[href="./03-start-screen/layout.css"]')) {
+      document.head.appendChild(style);
+    }
+  }
+
+  if (typeof window !== "undefined") {
+    window.KKS_FIREBASE_READY = Boolean(context?.db);
+    window.db = context?.db || null;
+  }
+
+  await runVerifiedStartSequence({
+    checkInternet: async () => (typeof navigator !== "undefined" ? navigator.onLine : false),
+    checkFirebase: async () => Boolean(context?.db),
+    checkRamData: async () => true
+  });
+}
