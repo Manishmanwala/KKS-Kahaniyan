@@ -5,6 +5,8 @@ const MODULES = [
   "./01-core-config",
   "./02-icons",
   "./03-start-screen"
+  "./04-home-page",
+  "./05-error-alert",
 ];
 
 const CANDIDATE_FILES = [
