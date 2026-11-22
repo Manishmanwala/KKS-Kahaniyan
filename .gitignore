@@ -1,0 +1,11 @@
+# स्थानीय / अस्थायी फ़ाइलें
+.env
+.env.*
+*.local
+*.log
+.DS_Store
+Thumbs.db
+
+# पैकेज / बिल्ड फ़ोल्डर्स
+node_modules/
+dist/
